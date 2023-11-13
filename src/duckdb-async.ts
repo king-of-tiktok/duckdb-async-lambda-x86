@@ -3,8 +3,8 @@
  * API but uses Promises instead of callbacks.
  *
  */
-import * as duckdb from "duckdb";
-import { ColumnInfo, TypeInfo } from "duckdb";
+import * as duckdb from "duckdb-lambda-x86";
+import { ColumnInfo, TypeInfo } from "duckdb-lambda-x86";
 import * as util from "util";
 
 type Callback<T> = (err: duckdb.DuckDbError | null, res: T) => void;
@@ -81,7 +81,7 @@ export class Connection {
     resolve: (c: Connection) => void,
     reject: (reason: any) => void
   ) {
-    this.conn = new duckdb.Connection(ddb, (err, res: any) => {
+    this.conn = new duckdb.Connection(ddb, (err: any, res: any) => {
       if (err) {
         this.conn = null;
         reject(err);
@@ -294,7 +294,7 @@ export class Database {
     resolve: (db: Database) => void,
     reject: (reason: any) => void
   ) {
-    this.db = new duckdb.Database(path, accessMode, (err, res) => {
+    this.db = new duckdb.Database(path, accessMode, (err: any, res: any) => {
       if (err) {
         reject(err);
       }
